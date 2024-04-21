@@ -17,7 +17,6 @@ import 'package:uber/rider/controller/provider/tripProvider/rideRequestProvider.
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const Uber());
