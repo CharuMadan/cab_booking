@@ -229,6 +229,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    mobileNumberController.addListener(() {
+      if (mobileNumberController.text.length == 10) {
+        // If the length reaches 10, unfocus the text field
+        FocusScope.of(context).unfocus();
+      }
+    });
     return SafeArea(
       child: Scaffold(
         body: ListView(
