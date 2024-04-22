@@ -183,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
 */
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uber/common/controller/provider/authProvider.dart';
@@ -266,6 +267,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: 70.w,
                   child: TextFormField(
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
                     controller: mobileNumberController,
                     cursorColor: Colors.black,
                     style: AppTextStyles.textFieldTextStyle,
@@ -302,7 +305,18 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 2.h,),
             ElevatedButtonCommon(
               onPressed: () {
-                login();
+                if (mobileNumberController.text.length < 10) {
+                  showToast('Please Enter valid Phone Number',
+                    context: context,
+                    backgroundColor: Colors.black,  //Background color of toast
+                    position: StyledToastPosition.top,
+                    animation: StyledToastAnimation.slideFromLeftFade,
+                  );
+
+                } else {
+                  login();
+                }
+               // login();
               },
               backgroundColor: black,
               height: 6.h,
