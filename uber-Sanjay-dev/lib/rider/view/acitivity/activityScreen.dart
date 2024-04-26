@@ -67,7 +67,7 @@ class _ActivityScreenRiderState extends State<ActivityScreenRider> {
                               jsonDecode(jsonEncode(snapshot.value))
                                   as Map<String, dynamic>);
                       return Container(
-                        padding: EdgeInsets.symmetric(vertical: 1.7.h),
+                        padding: EdgeInsets.symmetric(vertical: 1.4.h),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(

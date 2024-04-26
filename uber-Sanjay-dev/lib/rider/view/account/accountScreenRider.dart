@@ -113,7 +113,7 @@ class _AccountScreenRiderState extends State<AccountScreenRider> {
                         SizedBox(
                           width: 70.w,
                           child: Text(
-                            profileProvider.profileData!.name!,
+                            "User Name",
                             style: AppTextStyles.heading26Bold,
                           ),
                         ),
