@@ -38,7 +38,7 @@ class LocationServices {
     try {
       var response = await http
           .get(api, headers: {'Content-Type': 'application/json'}).timeout(
-              const Duration(seconds: 60), onTimeout: () {
+          const Duration(seconds: 60), onTimeout: () {
         ToastService.sendScaffoldAlert(
           msg: 'Opps! Connection Timed Out',
           toastStatus: 'ERROR',
@@ -49,15 +49,19 @@ class LocationServices {
 
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);
-        PickupNDropLocationModel model = PickupNDropLocationModel(
-          name: decodedResponse['results'][0]['formatted_address'],
-          placeID: decodedResponse['results'][0]['place_id'],
-          latitude: position.latitude,
-          longitude: position.latitude,
-        );
-        log(model.toMap().toString());
-        context.read<LocationProvider>().updatePickupLocation(model);
-        return model;
+        if (decodedResponse['results'] != null && decodedResponse['results'].isNotEmpty) {
+          PickupNDropLocationModel model = PickupNDropLocationModel(
+            name: decodedResponse['results'][0]['formatted_address'],
+            placeID: decodedResponse['results'][0]['place_id'],
+            latitude: position.latitude,
+            longitude: position.latitude, // <-- Should be longitude
+          );
+          log(model.toMap().toString());
+          context.read<LocationProvider>().updatePickupLocation(model);
+          return model;
+        } else {
+          throw Exception('No results found');
+        }
       }
     } catch (e) {
       throw Exception(e);

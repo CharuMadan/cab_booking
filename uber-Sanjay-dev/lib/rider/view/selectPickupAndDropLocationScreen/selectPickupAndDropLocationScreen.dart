@@ -1,10 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -18,6 +17,8 @@ import 'package:uber/constant/utils/colors.dart';
 import 'package:uber/constant/utils/textStyles.dart';
 import 'package:uber/rider/controller/provider/tripProvider/rideRequestProvider.dart';
 import 'package:uber/rider/view/bookARideScreen/bookARideScreen.dart';
+import '../../../constant/utils/keys.dart';
+import '../../controller/provider/Map_provider.dart';
 
 class PickupAndDropLocationScreen extends StatefulWidget {
   const PickupAndDropLocationScreen({super.key});
@@ -34,7 +35,7 @@ class _PickupAndDropLocationScreenState
   FocusNode dropLocationFocus = FocusNode();
   FocusNode pickupLocationFocus = FocusNode();
   String locationType = 'DROP';
-
+/*
   getCurrentAddress() async {
     LatLng crrLocation = await LocationServices.getCurrentLocation();
     PickupNDropLocationModel currentLocationAddress =
@@ -42,15 +43,21 @@ class _PickupAndDropLocationScreenState
             position: crrLocation, context: context);
     pickupLocationController.text = currentLocationAddress.name!;
   }
-
+*/
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getCurrentAddress();
+     // getCurrentAddress();
       context.read<RideRequestProvider>().createIcons(context);
       FocusScope.of(context).requestFocus(dropLocationFocus);
     });
+  }
+  @override
+  void dispose() {
+    pickupLocationController.dispose();
+    dropLocationController.dispose();
+    super.dispose();
   }
 
   navigateToBookRideScreen() async {
@@ -71,8 +78,10 @@ class _PickupAndDropLocationScreenState
       LatLng pickupLocation =
           LatLng(pickupModel.latitude!, pickupModel.longitude!);
       LatLng dropLocation = LatLng(dropModel.latitude!, dropModel.longitude!);
+      /*
       await DirectionServices.getDirectionDetailsRider(
           pickupLocation, dropLocation, context);
+      */
       context.read<RideRequestProvider>().makeFareZero();
       context.read<RideRequestProvider>().createIcons(context);
       context.read<RideRequestProvider>().updateMarker();
@@ -287,10 +296,13 @@ class _PickupAndDropLocationScreenState
                 builder: (context, locationProvider, child) {
               if (locationProvider.searchedAddress.isEmpty) {
                 return Center(
+                  child: mapBox(),
+                  /*
                   child: Text(
                     'Search Address',
                     style: AppTextStyles.small12,
                   ),
+                  */
                 );
               } else {
                 return ListView.builder(
@@ -334,5 +346,13 @@ class _PickupAndDropLocationScreenState
                     });
               }
             })));
+  }
+  Widget mapBox() {
+
+      return MapboxMap(
+        accessToken: Keys.mapbox_public_key,
+        initialCameraPosition: const CameraPosition(
+            target: LatLng(28.6304, 77.2177), zoom: 15.0),
+    );
   }
 }

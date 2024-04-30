@@ -18,6 +18,8 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_auth: ^4.15.2
   provider: ^6.1.1
+  location: ^5.0.3
+  logger: 1.4.0
   page_transition: ^2.1.0
   firebase_database: ^10.3.8
   file_picker: ^5.3.1
@@ -40,12 +42,16 @@ dependencies:
   flutter_geofire: ^2.0.3
   firebase_messaging: ^14.7.9
   just_audio: ^0.9.36
+  mapbox_gl:
+    git:
+      url: https://github.com/Sipioteo/maps_3_0_0
+      ref: master
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.11.0
 
 
 flutter_launcher_icons:

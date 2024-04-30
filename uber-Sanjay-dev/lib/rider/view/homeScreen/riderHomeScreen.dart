@@ -311,7 +311,7 @@ class ExploreFeaturesHorizontalListView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 15.h,
+                        height: 10.h,
                         width: 65.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.sp),
